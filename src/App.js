@@ -4,24 +4,52 @@ import Button from './Componentes/Button.js';
 import Screen from "./Componentes/Screen.js";
 import Clear from "./Componentes/Clear.js";
 import {useState} from "react";
-import {evaluate} from "mathjs";
+import {evaluate, format, number} from "mathjs";
 
 function App() {
 
 const[input, setInput] = useState('');
 
+const validateInput = (value, lastValue='') => {
+  console.log(Number(value))
+  const formattedValue = Number(value) || ''
+const formattedLastValue = Number(lastValue)
+if ( value !== NaN || value === '.'  ){
+    return value
+  }
+  if ( formattedLastValue) {
+    return value
+  }
+  if ( formattedLastValue===NaN && ( (typeof (value)) === 'number')){
+    return value
+  }
+  if ( !lastValue && value===NaN ){
+    return value
+  }
+}
+
+
+
 const addInput = val => {
-  setInput(input + val);
+  const lastValue = (input[input.length-1])
+  const newValue = validateInput(val,lastValue)
+  if ( newValue ){
+    setInput(input + newValue)
+  }
 };
+//si el valor anterior es un numero dejame usar caracteres especiales
 
 const calcResult = () => {
-  if(input){
+  if(input[0] === Number(input) || input[0] === "."){
     setInput(evaluate(input));
   } else {
     setInput("Math ERROR")
   }
   setInput(evaluate(input));
 };
+
+
+
 
   return (
     <div className="App">

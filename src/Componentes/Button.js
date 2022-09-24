@@ -3,7 +3,6 @@ import "../Estilos/Button.css"
 
 function Button(props){
   const esOperador = valor => {
-    // eslint-disable-next-line
     return isNaN(valor) && (valor != ".") && (valor != "=");
   }
 
